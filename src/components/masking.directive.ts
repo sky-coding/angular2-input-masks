@@ -1,10 +1,16 @@
 import {Directive, ElementRef, Input} from '@angular/core';
 import {NgModel} from '@angular/forms';
 
+export type CustomMaskConfig = {initialValue: string; currentCaretPosition: number};
+export type CustomMaskResult = {maskedValue: string; newCaretPosition?: number};
+export type CustomMask = (config: CustomMaskConfig) => CustomMaskResult;
+
 export enum MaskType {
   LettersOnly,
   NumbersOnly,
-  Alphanumeric
+  Alphanumeric,
+  Regex,
+  Custom
 }
 
 @Directive({
@@ -17,9 +23,13 @@ export class MaskingDirective {
   private inputElement: HTMLInputElement;
 
   @Input('textMask') textMaskConfig: {
-    type: MaskType
+    type: MaskType,
+    regex: any,
+    custom: CustomMask
   } = {
     type: null,
+    regex: null,
+    custom: null,
   };
 
   constructor(inputElement: ElementRef, private ngModel: NgModel) {
@@ -32,40 +42,69 @@ export class MaskingDirective {
 
   onInput() {
     let initialValue = this.inputElement.value;
-
     let caretPosition = this.inputElement.selectionStart;
-    let textBeforeCaret = initialValue.slice(0, caretPosition);
 
-    let mask:(s:string) => string;
+    let mask: CustomMask;
 
-    console.log('this.textMaskConfig', this.textMaskConfig);
+    let regexMaskFactory = (regex: any): CustomMask => {
+      let c: CustomMask = (config: CustomMaskConfig) => {
+        let replace = (s: string) => s.replace(regex, '');
+        let textBeforeCaret = initialValue.slice(0, config.currentCaretPosition);
+        let maskedValue = replace(config.initialValue);
+        let newCaretPosition = replace(textBeforeCaret).length;
+
+        let result: CustomMaskResult = {
+          maskedValue: maskedValue,
+          newCaretPosition: newCaretPosition
+        };
+
+        return result;
+      }
+
+      return c;
+    }
 
     switch (this.textMaskConfig.type) {
       case MaskType.LettersOnly:
-        mask = (s:string) => s.replace(/[^a-z]/ig, '');
+        mask = regexMaskFactory(/[^a-z]/ig);
         break;
       case MaskType.NumbersOnly:
-        mask = (s:string) => s.replace(/[^0-9.\-]/ig, '');
+        mask = regexMaskFactory(/[^0-9.\-]/ig);
         break;
       case MaskType.Alphanumeric:
-        mask = (s:string) => s.replace(/[^a-z0-9.\-]/ig, '');
+        mask = regexMaskFactory(/[^a-z0-9.\-]/ig);
+        break;
+      case MaskType.Regex:
+        if (!this.textMaskConfig.regex) {
+          mask = null;
+          break;
+        }
+        mask = regexMaskFactory(this.textMaskConfig.regex);
+        break;
+      case MaskType.Custom:
+        if (!this.textMaskConfig.custom) {
+          mask = null;
+          break;
+        }
+        mask = this.textMaskConfig.custom;
         break;
       default:
-        mask = (s:string) => s;
+        mask = null;
     }
 
-    let maskedValue = mask(initialValue);
-    let newCaretPosition = mask(textBeforeCaret).length;
+    let result = mask({initialValue: initialValue, currentCaretPosition: caretPosition});
+    if (result.maskedValue == initialValue) return;
 
-    if (maskedValue == initialValue) return;
-
-    this.ngModel.control.updateValue(maskedValue, {
+    this.ngModel.control.updateValue(result.maskedValue, {
       onlySelf: false,
       emitEvent: true,
       emitModelToViewChange: true
     });
 
-    this.inputElement.setSelectionRange(newCaretPosition, newCaretPosition);
+    if (this.isInt(result.newCaretPosition)) this.inputElement.setSelectionRange(result.newCaretPosition, result.newCaretPosition);
+  }
 
+  isInt(value) {
+    return !isNaN(value) && parseInt(Number(value) as any) == value && !isNaN(parseInt(value, 10));
   }
 }
