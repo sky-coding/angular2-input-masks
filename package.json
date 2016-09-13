@@ -29,6 +29,10 @@
     "zone.js": "^0.6.6"
   },
   "devDependencies": {
+    "@angular/common": "2.0.0-rc.4",
+    "@angular/compiler": "2.0.0-rc.4",
+    "@angular/core": "2.0.0-rc.4",
+    "@angular/forms": "0.2.0",
     "@types/core-js": "^0.9.28",
     "@types/hammerjs": "^2.0.28",
     "@types/jasmine": "^2.2.29",
@@ -63,6 +67,7 @@
     "raw-loader": "0.5.1",
     "remap-istanbul": "^0.6.3",
     "rimraf": "^2.5.2",
+    "rxjs": "5.0.0-beta.6",
     "source-map-loader": "^0.1.5",
     "string-replace-loader": "github:gdi2290/string-replace-loader",
     "style-loader": "^0.13.1",
@@ -78,7 +83,8 @@
     "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "^2.1.0-beta.2",
     "webpack-md5-hash": "^0.0.5",
-    "webpack-merge": "^0.14.1"
+    "webpack-merge": "^0.14.1",
+    "zone.js": "^0.6.6"
   },
   "engines": {
     "node": ">= 4.2.1",

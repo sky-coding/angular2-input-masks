@@ -22,7 +22,7 @@ import {MaskingDirective, MaskType, CustomMask, CustomMaskConfig, CustomMaskResu
     <input type="text" [(ngModel)]="firstName" [textMask]="{type: MaskType.LettersOnly}" />
     <input type="text" [(ngModel)]="age" [textMask]="{type: MaskType.NumbersOnly}" />
     <input type="text" [(ngModel)]="password" [textMask]="{type: MaskType.Regex, regex:customRegex}" />
-    <input type="text" [(ngModel)]="custom" [textMask]="{type: MaskType.Custom, regex:customMask}" />
+    <input type="text" [(ngModel)]="custom" [textMask]="{type: MaskType.Custom, custom:customMask}" />
   `,
   directives: [MaskingDirective]
 })
