@@ -39,7 +39,7 @@ export class MyComponent {
   }
 }
 
-// remember to import ModalModule into your NgModule!
+// remember to import MaskingModule into your NgModule!
 ```
 
 ---
