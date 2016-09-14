@@ -2,13 +2,13 @@
 input masking for Angular 2
 
 ### Dependencies
-"@angular/common": "2.0.0-rc.4",
+"@angular/common": "2.0.0-rc.5",
 
-"@angular/compiler": "2.0.0-rc.4",
+"@angular/compiler": "2.0.0-rc.5",
 
-"@angular/core": "2.0.0-rc.4",
+"@angular/core": "2.0.0-rc.5",
 
-"@angular/forms": "0.2.0"
+"@angular/forms": "0.3.0"
 
 ## Usage
 ```javascript
@@ -33,8 +33,8 @@ export class MyComponent {
   
   customMask:CustomMask = (config:CustomMaskConfig) => {
     let result:CustomMaskResult = {
-      maskedValue: '',
-      newCaretPosition: 0
+      maskedValue: config.initialValue.toUpperCase(),
+      newCaretPosition: config.currentCaretPosition
     };
     return result;
   }
