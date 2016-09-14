@@ -13,7 +13,7 @@ input masking for Angular 2
 ## Usage
 ```javascript
 import {Component} from '@angular/core';
-import {MaskingDirective, MaskType, CustomMask, CustomMaskConfig, CustomMaskResult} from 'angular2-input-masks';
+import {MaskType, CustomMask, CustomMaskConfig, CustomMaskResult} from 'angular2-input-masks';
 
 @Component({
   selector: 'my-component',
@@ -23,8 +23,7 @@ import {MaskingDirective, MaskType, CustomMask, CustomMaskConfig, CustomMaskResu
     <input type="text" [(ngModel)]="age" [textMask]="{type: MaskType.NumbersOnly}" />
     <input type="text" [(ngModel)]="password" [textMask]="{type: MaskType.Regex, regex:customRegex}" />
     <input type="text" [(ngModel)]="custom" [textMask]="{type: MaskType.Custom, custom:customMask}" />
-  `,
-  directives: [MaskingDirective]
+  `
 })
 export class MyComponent {
   MaskType = MaskType;
@@ -39,6 +38,8 @@ export class MyComponent {
     return result;
   }
 }
+
+// remember to import ModalModule into your NgModule!
 ```
 
 ---
