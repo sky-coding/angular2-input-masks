@@ -4,7 +4,7 @@
   "description": "",
   "keywords": [],
   "author": "sky-coding",
-  "homepage": "http://sky-coding.com",
+  "homepage": "https://github.com/sky-coding/angular2-input-masks",
   "license": "",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
@@ -89,5 +89,9 @@
   "engines": {
     "node": ">= 4.2.1",
     "npm": ">= 3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sky-coding/angular2-input-masks.git"
   }
 }
