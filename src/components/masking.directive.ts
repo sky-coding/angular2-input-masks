@@ -48,7 +48,7 @@ export class MaskingDirective {
 
     let regexMaskFactory = (regex: any): CustomMask => {
       let c: CustomMask = (config: CustomMaskConfig) => {
-        let replace = (s: string) => s.replace(regex, '');
+        let replace = (s: string) => s.replace(new RegExp(regex, 'g'), '');
         let textBeforeCaret = initialValue.slice(0, config.currentCaretPosition);
         let maskedValue = replace(config.initialValue);
         let newCaretPosition = replace(textBeforeCaret).length;
@@ -95,6 +95,7 @@ export class MaskingDirective {
     let result = mask({initialValue: initialValue, currentCaretPosition: caretPosition});
     if (result.maskedValue == initialValue) return;
 
+    // TODO: Use setValue in RC6+
     this.ngModel.control.updateValue(result.maskedValue, {
       onlySelf: false,
       emitEvent: true,
