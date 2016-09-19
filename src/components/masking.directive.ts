@@ -66,13 +66,13 @@ export class MaskingDirective {
 
     switch (this.textMaskConfig.type) {
       case MaskType.LettersOnly:
-        mask = regexMaskFactory(/[^a-z]/ig);
+        mask = regexMaskFactory('[^a-zA-Z]');
         break;
       case MaskType.NumbersOnly:
-        mask = regexMaskFactory(/[^0-9.\-]/ig);
+        mask = regexMaskFactory('[^0-9.\\-]');
         break;
       case MaskType.Alphanumeric:
-        mask = regexMaskFactory(/[^a-z0-9.\-]/ig);
+        mask = regexMaskFactory('[^a-zA-Z0-9.\\-]');
         break;
       case MaskType.Regex:
         if (!this.textMaskConfig.regex) {
