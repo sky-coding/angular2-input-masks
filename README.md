@@ -1,14 +1,7 @@
 # angular2-input-masks
-input masking for Angular 2
+This input sanitization directive prevents the user from typing invalid characters into your inputs. It will later be extended to support masking, e.g. (xxx)xxx-xxxx for phone numbers.  
 
-### Dependencies
-"@angular/common": "2.0.0-rc.5",
-
-"@angular/compiler": "2.0.0-rc.5",
-
-"@angular/core": "2.0.0-rc.5",
-
-"@angular/forms": "0.3.0"
+Supports 2.0.0.
 
 ## Usage
 ```javascript
@@ -28,7 +21,8 @@ import {MaskType, CustomMask, CustomMaskConfig, CustomMaskResult} from 'angular2
 export class MyComponent {
   MaskType = MaskType;
   
-  customRegex = /[^a-z0-9!%&#]/
+  // anything matching this regex will be replaced. remember to use the negate flag (^) when whitelisting
+  customRegex = /[^a-z0-9!%&#]/; 
   
   customMask:CustomMask = (config:CustomMaskConfig) => {
     let result:CustomMaskResult = {

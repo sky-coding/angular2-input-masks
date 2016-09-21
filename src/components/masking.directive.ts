@@ -59,10 +59,10 @@ export class MaskingDirective {
         };
 
         return result;
-      }
+      };
 
       return c;
-    }
+    };
 
     switch (this.textMaskConfig.type) {
       case MaskType.LettersOnly:
@@ -95,8 +95,7 @@ export class MaskingDirective {
     let result = mask({initialValue: initialValue, currentCaretPosition: caretPosition});
     if (result.maskedValue == initialValue) return;
 
-    // TODO: Use setValue in RC6+
-    this.ngModel.control.updateValue(result.maskedValue, {
+    this.ngModel.control.setValue(result.maskedValue, {
       onlySelf: false,
       emitEvent: true,
       emitModelToViewChange: true
